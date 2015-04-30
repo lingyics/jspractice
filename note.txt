@@ -1,0 +1,88 @@
+Often, you can call up a console with a keystroke like F12 or Ctrl- Shift-J.
+
+use the function console.log() to display text on the console.
+
+A similar but more intrusive way to display output or debugging messages is by passing a string of text to the alert() function, which displays it in a modal dialog box.
+
+Two other very important types that JavaScript programs can manipulate are objects and arrays.
+
+JavaScript is a case-sensitive language
+
+HTML is not case-sensitive (although XHTML is)
+
+A JavaScript iden- tifier must begin with a letter, an underscore (_), or a dollar sign ($). Subsequent char- acters can be letters, digits, underscores, or dollar signs. 
+
+;[x,x+1,x+2].forEach(console.log) // Defensive ; keeps this statement separate
+
+you must not insert a line break between return, break or continue and the expression that follows the keyword. 
+
+'You\'re right, it can\'t be a quote'
+
+var s = "hello, world" 
+s.charAt(0)             // => "h": the first character 
+s.charAt(s.length-1) 	// => "d": the last character.
+s.substring(1,4) 	// => "ell": the 2nd, 3rd and 4th characters.
+s.slice(1,4) 		// => "ell": same thing
+s.slice(-3) 		// => "rld": last 3 characters
+s.indexOf("l") 		// => 2: position of first letter l.
+s.lastIndexOf("l") 	// => 10: position of last letter l.
+s.indexOf("l", 3)	// => 3: position of first "l" at or after 3
+s.split(", ")  		// => ["hello", "world"] split into substrings
+s.replace("h", "H") 	// =>  "Hello, world": replaces all instances
+s.toUpperCase()		// => "HELLO, WORLD"  
+
+The global object is a regular JavaScript object that serves a very important purpose: the properties of this object are the globally defined symbols that are available to a JavaScript program.
+
+• global properties like undefined, Infinity, and NaN
+• global functions like isNaN(), parseInt() (§3.8.2), and eval() (§4.12).
+• constructor functions like Date(), RegExp(), String(), Object(), and Array() (§3.8.2)
+• global objects like Math and JSON (§6.9)
+
+When the value of a property is a function, we call it a method. To invoke the method m of an object o, we write o.m().
+
+that strings, numbers, and boolean values behave like objects when you try to read the value of a property (or method) from them. But if you attempt to set the value of a property, that attempt is silently ignored: the change is made on a temporary object and does not persist.
+ You just need to know that string, number, and boolean values differ from objects in that their properties are read-only and that you can’t define new properties on them.
+Note that it is possible (but almost never necessary or useful) to explicitly create wrap- per objects, by invoking the String(), Number(), or Boolean() constructors:
+var s = "test", n = 1, b = true; // A string, number, and boolean value.
+var S = new String(s); 
+
+There is a fundamental difference in JavaScript between primitive values (undefined, null, booleans, numbers, and strings) and objects (including arrays and functions). Primitives are immutable: there is no way to change (or “mutate”) a primitive value.
+
+Primitives are also compared by value: two values are the same only if they have the same value.
+
+Objects are different than primitives. First, they are mutable—their values can change:
+Objects are not compared by value: two objects are not equal even if they have the same properties and values. And two arrays are not equal even if they have the same elements in the same order:
+Objects are sometimes called reference types to distinguish them from JavaScript’s primitive types. Using this terminology, object values are references, and we say that objects are compared by reference: two object values are the same if and only if they refer to the same underlying object.
+
+Similarly, if we want to compare two distinct objects or arrays, we must compare their properties or elements. This code defines a function to compare two arrays:
+function equalArrays(a,b) {
+if (a.length != b.length) return false; 
+for(var i = 0; i < a.length; i++)
+if (a[i] !== b[i]) return false;
+return true;
+}
+
+Although JavaScript performs many type conversions automatically, you may some- times need to perform an explicit conversion, or you may prefer to make the conversions explicit to keep your code clearer.
+The simplest way to perform an explicit type conversion is to use the Boolean(), Number(), String(), or Object() functions. 
+
+toFixed() converts a number to a string with a specified number of digits after the decimal point.
+
+var n = 123456.789;
+n.toFixed(0);  // "123457"
+n.toFixed(2);  // "123456.79"
+
+parseInt() parses only integers, while parseFloat() parses both integers and floating-point numbers. If a string begins with “0x” or “0X”, parseInt() interprets it as a hexadecimal number.2 Both parseInt() and parseFloat() skip leading white- space, parse as many numeric characters as they can, and ignore anything that follows. If the first nonspace character is not part of a valid numeric literal, they return NaN:
+
+parseInt("3 blind mice")   // => 3
+parseFloat(" 3.14 meters") // => 3.14
+parseInt("-12.34")	   // => -12
+parseInt("0xFF")	   // => 255
+parseInt("0xff")	   // => 255
+parseInt(".1")		   // => NaN: integers can't start with "."
+parseFloat("$72.47");	   // => NaN: numbers can't start with "$"
+
+The scope of a variable is the region of your program source code in which it is defined. A global variable has global scope; it is defined everywhere in your JavaScript code. On the other hand, variables declared within a function are defined only within the body of the function. 
+
+Although you can get away with not using the var statement when you write code in the global scope, you must always use var to declare local variables.
+
+Function definitions can be nested. Each function has its own local scope, so it is pos- sible to have several nested layers of local scope.
