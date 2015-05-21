@@ -86,3 +86,328 @@ The scope of a variable is the region of your program source code in which it is
 Although you can get away with not using the var statement when you write code in the global scope, you must always use var to declare local variables.
 
 Function definitions can be nested. Each function has its own local scope, so it is pos- sible to have several nested layers of local scope.
+
+The return value of the ++ operator depends on its position relative to the operand. When used before the operand, where it is known as the pre-increment operator, it increments the operand and evaluates to the incremented value of that operand. When used after the operand, where it is known as the post-increment operator, it increments its operand but evaluates to the unincremented value of that operand. Consider the difference between these two lines of code:
+var i = 1, j = ++i; // i and j are both 2
+var i = 1, j = i++; // i is 2, j is 1
+
+you read “gets or is assigned” for =, “is equal to” for ==, and “is strictly equal to” for ===.
+
+
+Like many interpreted languages, JavaScript has the ability to interpret strings of Java- Script source code, evaluating them to produce a value. JavaScript does this with the global function eval():
+eval("3+2") // => 5
+
+greeting = "hello " + (username ? username : "there");
+
+(typeof value == "string") ? "'" + value + "'" : value
+typeof(i)
+
+var o = { x: 1, y: 2}; 
+delete o.x;
+"x" in o
+
+var a = [1,2,3]; 
+delete a[2]; 
+a.length
+
+// Start with an object
+// Delete one of its properties
+// => false: the property does not exist anymore
+// Start with an array
+// Delete the last element of the array 
+// => 2: array only has two elements now
+
+but 99 percent of the time you should be careful to end every case with a break statement. (When using switch inside a function, however, you may use a return statement instead of a break statement
+Both serve to terminate the switch statement and prevent execution from falling through to the next case.
+
+The following code uses a for loop to traverse a linked list data structure and return the last object in the list (i.e., the first object that does not have a next property):
+function tail(o) { // Return the tail of linked list o for(; o.next; o = o.next) /* empty */ ; // Traverse while o.next is truthy
+return o; }
+
+Any statement may be labeled by preceding it with an identifier and a colon:
+identifier: statement
+
+mainloop: while(token != null) {
+// Code omitted...
+continue mainloop; // Jump to the next iteration of the named loop // More code omitted...
+}
+
+The break statement, used alone, causes the innermost enclosing loop or switch state- ment to exit immediately. Its syntax is simple:
+break;
+
+JavaScript also allows the break keyword to be followed by a statement label (just the
+identifier, with no colon):
+break labelname;
+
+When break is used with a label, it jumps to the end of, or terminates, the enclosing statement that has the specified label.
+
+The continue statement is similar to the break statement. Instead of exiting a loop, however, continue restarts a loop at the next iteration. The continue statement’s syntax is just as simple as the break statement’s:
+continue;
+The continue statement can also be used with a label:
+continue labelname;
+The continue statement, in both its labeled and unlabeled forms, can be used only
+within the body of a loop. Using it anywhere else causes a syntax error.
+
+The return statement can also be used without an expression to make the function return undefined to its caller. For example:
+function display_object(o) {
+// Return immediately if the argument is null or undefined. if (!o) return;
+// Rest of function goes here...
+}
+
+// Simulate for( initialize ; test ; increment ) body; initialize ;
+while( test ) {
+try { body ; }
+finally { increment ; } }
+
+Note, however, that a body that contains a break statement behaves slightly differently (causing an extra increment before exiting) in the while loop than it does in the for loop, so even with the finally clause, it is not possible to completely simulate the for loop with while.
+
+var empty = {};
+var point = { x:0, y:0 };
+var point2 = { x:point.x, y:point.y+1 }; var book = {
+"main title": "JavaScript", 'sub-title': "The Definitive Guide", "for": "all audiences",
+author: {
+firstname: "David", surname: "Flanagan"
+} };
+
+var o = new Object();
+var a = new Array();
+var d = new Date();
+var r = new RegExp("js"); // Create a RegExp object for pattern matching.
+
+var o1 = Object.create({x:1, y:2}); // o1 inherits properties x and y.
+
+var o = {}
+o.x = 1;
+var p = inherit(o); p.y = 2;
+var q = inherit(p); q.z = 3;
+var s = q.toString(); q.x + q.y  // => 3: x and y are inherited from o and p
+
+var o = { x: 1 }
+"x" in o; // true: o has an own property "x"
+"y" in o; // false: o doesn't have a property "y" 
+"toString" in o; // true: o inherits a toString property
+
+The hasOwnProperty() method of an object tests whether that object has an own prop- erty with the given name. It returns false for inherited properties:
+var o = { x: 1 }
+o.hasOwnProperty("x"); // true: o has an own property x 
+o.hasOwnProperty("y"); // false: o doesn't have a property y 
+o.hasOwnProperty("toString"); // false: toString is an inherited property
+
+var o = inherit({ y: 2 });
+o.x = 1;
+o.propertyIsEnumerable("x"); // true: o has an own enumerable property x 
+o.propertyIsEnumerable("y"); // false: y is inherited, not own 
+Object.prototype.propertyIsEnumerable("toString"); // false: not enumerable
+
+Instead of using the in operator it is often sufficient to simply query the property and use !== to make sure it is not undefined:
+
+// If o has a property x whose value is not null or undefined, double it. 
+if (o.x != null) o.x *= 2;
+// If o has a property x whose value does not convert to false, double it.
+ // If x is undefined, null, false, "", 0, or NaN, leave it alone.
+if (o.x) o.x *= 2;
+
+for(p in o) {
+if (!o.hasOwnProperty(p)) continue; // Skip inherited properties
+}
+
+for(p in o) {
+if (typeof o[p] === "function") continue; // Skip methods 
+}
+
+var p = {
+// x and y are regular read-write data properties. x: 1.0,
+y: 1.0,
+// r is a read-write accessor property with getter and setter. // Don't forget to put a comma after accessor methods.
+get r() { return Math.sqrt(this.x*this.x + this.y*this.y); }, set r(newvalue) {
+var oldvalue = Math.sqrt(this.x*this.x + this.y*this.y); var ratio = newvalue/oldvalue;
+this.x *= ratio;
+this.y *= ratio;
+},
+// theta is a read-only accessor property with getter only.
+get theta() { return Math.atan2(this.y, this.x); } };
+
+Accessor properties are inherited, just as data properties are, so you can use the object p defined above as a prototype for other points. You can give the new objects their own x and y properties, and they’ll inherit the r and theta properties:
+var q = inherit(p); // Create a new object that inherits getters and setters q.x = 0, q.y = 0; // Create q's own data properties
+console.log(q.r); // And use the inherited accessor properties console.log(q.theta);
+
+// This object generates strictly increasing serial numbers var serialnum = {
+// This data property holds the next serial number.
+// The $ in the property name hints that it is a private property. $n: 0,
+// Return the current value and increment it get next() { return this.$n++; },
+// Set a new value of n, but only if it is larger than current set next(n) {
+if (n >= this.$n) this.$n = n;
+else throw "serial number can only be set to a larger value"; }
+};
+
+var p = {x:1};
+var o = Object.create(p);
+p.isPrototypeOf(o)
+Object.prototype.isPrototypeOf(o) // => true: p inherits from Object.prototype
+
+Object.seal() works like Object.preventExtensions(), but in addition to making the object nonextensible, it also makes all of the own properties of that object nonconfig- urable. 
+
+You can use Object.isSealed() to determine whether an object is sealed.
+
+Object.freeze() locks objects down even more tightly. In addition to making the object nonextensible and its properties nonconfigurable, it also makes all of the object’s own data properties read-only
+Use Object.isFrozen() to determine if an object is frozen.
+
+// Create a sealed object with a frozen prototype and a nonenumerable property var o = Object.seal(Object.create(Object.freeze({x:1}),
+{y: {value: 2, writable: true}}));
+
+JSON stands for “JavaScript Object Notation,”
+
+o = {x:1, y:{z:[false,null,""]}}; // Define a test object
+s = JSON.stringify(o); // s is '{"x":1,"y":{"z":[false,null,""]}}'
+p = JSON.parse(s); // p is a deep copy of o
+
+The toString() method takes no arguments; it returns a string that somehow represents the value of the object on which it is invoked. 
+
+Deleting an array element is similar to (but subtly different than) assigning undefined to that element. Note that using delete on an array element does not alter the length property and does not shift elements with higher indexes down to fill in the gap that is left by the deleted property. 
+
+for(var i in a) {
+if (!a.hasOwnProperty(i)) continue; // Skip inherited properties
+// loop body here }
+
+var data = [1,2,3,4,5]; // This is the array we want to iterate
+var sumOfSquares = 0; // We want to compute the sum of the squares of data data.forEach(function(x) { // Pass each element of data to this function
+sumOfSquares
+sumOfSquares += x*x; // add up the squares });
+// =>55 : 1+4+9+16+25
+
+The Array.join() method converts all the elements of an array to strings and concat- enates them, returning the resulting string.
+
+You can specify an optional string that separates the elements in the resulting string. If no separator string is specified, a comma is used. 
+
+var a = [1, 2, 3]; a.join();
+a.join(" "); a.join("");
+var b = new Array(10); b.join('-')
+// Create a new array with these three elements // => "1,2,3"
+// => "1 2 3"
+// => "123"
+// An array of length 10 with no elements // => '---------': a string of 9 hyphens
+
+The Array.reverse() method reverses the order of the elements of an array and returns the reversed array. 
+var a = [1,2,3];
+a.reverse().join() // => "3,2,1" and a is now [3,2,1]
+
+Array.sort() sorts the elements of an array in place and returns the sorted array. When sort() is called with no arguments, it sorts the array elements in alphabetical order (temporarily converting them to strings to perform the comparison, if necessary):
+var a = new Array("banana", "cherry", "apple"); a.sort();
+var s = a.join(", "); // s == "apple, banana, cherry"
+
+If an array contains undefined elements, they are sorted to the end of the array.
+
+This function decides which of its two arguments should appear first in the sorted array. If the first argument should appear before the second, the comparison function should return a number less than zero. If the first argument should appear after the second in the sorted array, the function should return a number greater than zero. And if the two values are equivalent (i.e., if their order is irrelevant), the comparison function should return 0. So, for example, to sort array elements into numerical rather than alphabetical order, you might do this:
+
+var a = [33, 4, 1111, 222];
+a.sort(); // Alphabetical order: 1111, 222, 33, 4 a.sort(function(a,b) { // Numerical order: 4, 33, 222, 1111
+
+return a-b; // Returns &lt; 0, 0, or &gt; 0, depending on order });
+a.sort(function(a,b) {return b-a}); // Reverse numerical order
+
+a = ['ant', 'Bug', 'cat', 'Dog']
+a.sort(); // case-sensitive sort: ['Bug','Dog','ant',cat'] a.sort(function(s,t) { // Case-insensitive sort
+var a = s.toLowerCase(); var b = t.toLowerCase(); if (a < b) return -1;
+if (a > b) return 1; return 0;
+}); // => ['ant','Bug','cat','Dog']
+
+
+var a = [1,2,3];
+a.concat(4, 5)
+a.concat([4,5]);
+a.concat([4,5],[6,7])
+a.concat(4, [5,[6,7]]) // Returns [1,2,3,4,5,[6,7]]
+
+The returned array contains the element specified by the first argument and all subsequent elements up to, but not including, the element specified by the second argument.
+
+An argument of -1, for example, specifies the last element in the array, and an argument of -3 specifies the third from last element of the array.
+
+var a = [1,2,3,4,5];
+a.slice(0,3); // Returns [1,2,3]
+a.slice(3); // Returns [4,5] a.slice(1,-1); // Returns [2,3,4] a.slice(-3,-2); // Returns [3]
+
+The Array.splice() method is a general-purpose method for inserting or removing elements from an array. Unlike slice() and concat(), splice() modifies the array on which it is invoked. 
+
+The first argument to splice() speci- fies the array position at which the insertion and/or deletion is to begin. The second argument specifies the number of elements that should be deleted from (spliced out of) the array. If this second argument is omitted, all array elements from the start element to the end of the array are removed.
+
+var a = [1,2,3,4,5,6,7,8];
+a.splice(4); // Returns [5,6,7,8]; a is [1,2,3,4] a.splice(1,2); // Returns [2,3]; a is [1,4] a.splice(1,1); // Returns [4]; a is [1]
+
+The first two arguments to splice() specify which array elements are to be deleted. These arguments may be followed by any number of additional arguments that specify elements to be inserted into the array, starting at the position specified by the first argument. For example:
+
+var a = [1,2,3,4,5];
+a.splice(2,0,'a','b'); // Returns []; a is [1,2,'a','b',3,4,5] a.splice(2,2,[1,2],3); // Returns ['a','b']; a is [1,2,[1,2],3,3,4,5]
+Note that, unlike concat(), splice() inserts arrays themselves, not the elements of those arrays.
+
+The push() method appends one or more new elements to the end of an array and returns the new length of the array. The pop() method does the reverse: it deletes the last element of an array, decrements the array length, and returns the value that it removed
+
+var stack = []; stack.push(1,2); stack.pop();
+// stack: []
+// stack: [1,2] Returns 2 // stack: [1] Returns 2
+
+stack.push(3); stack.pop(); stack.push([4,5]); stack.pop() stack.pop();
+// stack: [1,3]
+// stack: [1]
+// stack: [1,[4,5]] // stack: [1]
+// stack: []
+Returns 2 Returns 3 Returns 2 Returns [4,5] Returns 1
+
+The unshift() and shift() methods behave much like push() and pop(), except that they insert and remove elements from the beginning of an array rather than from the end.
+
+unshift() adds an element or elements to the beginning of the array, shifts the existing array elements up to higher indexes to make room, and returns the new length of the array. shift() removes and returns the first element of the array, shifting all subsequent elements down one place to occupy the newly vacant space at the start of the array
+
+Note the possibly surprising behavior of unshift() when it’s invoked with multiple arguments. Instead of being inserted into the array one at a time, arguments are inserted all at once (as with the splice() method). This means that they appear in the resulting array in the same order in which they appeared in the argument list.
+
+var a = []; a.unshift(1); a.unshift(22); a.shift(); a.unshift(3,[4,5]); a.shift(); a.shift(); a.shift();
+// a:[]
+// a:[1]
+// a:[22,1]
+// a:[1]
+// a:[3,[4,5],1] // a:[[4,5],1] // a:[1]
+// a:[]
+Returns: 1 Returns: 2 Returns: 22 Returns: 3 Returns: 3 Returns: [4,5] Returns: 1
+
+[1,2,3].toString() // Yields '1,2,3' ["a", "b", "c"].toString() // Yields 'a,b,c' [1, [2,'c']].toString() // Yields '1,2,c'
+
+var data = [1,2,3,4,5];
+// Compute the sum of the array elements
+var sum = 0;
+data.forEach(function(value) { sum += value; }); sum
+// Now increment each array element data.forEach(function(v, i, a) { a[i] = v + 1; }); data
+// An array to sum
+// Start at 0
+// Add each value to sum // => 15
+// => [2,3,4,5,6]
+
+forEach() then invokes your function with three arguments: the value of the array element, the index of the array element, and the array itself.
+
+a = [1, 2, 3];
+b = a.map(function(x) { return x*x; }); // b is [1, 4, 9]
+The function you pass to map() is invoked in the same way as a function passed to forEach(). For the map() method, however, the function you pass should return a value. Note that map() returns a new array: it does not modify the array it is invoked on
+
+
+a = [5, 4, 3, 2, 1];
+smallvalues = a.filter(function(x) { return x < 3 }); // [2, 1] everyother = a.filter(function(x,i) { return i%2==0 }); // [5, 3, 1]
+Note that filter() skips missing elements in sparse arrays, and that its return value is always dense. To close the gaps in a sparse array, you can do this:
+var dense = sparse.filter(function() { return true; });
+And to close gaps and remove undefined and null elements you can use filter like this: a = a.filter(function(x) { return x !== undefined && x != null; });
+
+The every() method is like the mathematical “for all” quantifier ô: it returns true if and only if your predicate function returns true for all elements in the array:
+
+The some() method is like the mathematical “there exists” quantifier ô: it returns true if there exists at least one element in the array for which the predicate returns true, and returns false if and only if the predicate returns false for all elements of the array
+
+The reduce() and reduceRight() methods combine the elements of an array, using the function you specify, to produce a single value
+
+reduce() takes two arguments. The first is the function that performs the reduction operation. The task of this reduction function is to somehow combine or reduce two values into a single value, and to return that reduced value. In the examples above, the functions combine two values by adding them, multiplying them, and choosing the largest. The second (optional) argument is an initial value to pass to the function.
+
+indexOf() and lastIndexOf() search an array for an element with a specified value, and return the index of the first such element found, or –1 if none is found.
+
+indexOf() searches the array from beginning to end, and lastIndexOf() searches from end to beginning.
+a = [0,1,2,1,0]; a.indexOf(1) a.lastIndexOf(1) a.indexOf(3)
+// => 1: a[1] is 1
+// => 3: a[3] is 1
+// => -1: no element has value 3
+
+
+
+
