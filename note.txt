@@ -411,3 +411,118 @@ a = [0,1,2,1,0]; a.indexOf(1) a.lastIndexOf(1) a.indexOf(3)
 
 
 
+One important use of the Arguments object is to write functions that operate on any number of arguments. The following function accepts any number of numeric argu- ments and returns the value of the largest argument it is passed (see also the built-in function Math.max(), which behaves the same way):
+function max(/* ... */) {
+var max = Number.NEGATIVE_INFINITY;
+// Loop through the arguments, looking for, and remembering, the biggest. for(var i = 0; i < arguments.length; i++)
+if (arguments[i] > max) max = arguments[i]; // Return the biggest
+return max;
+}
+var largest = max(1, 10, 100, 2, 3, 1000, 4, 5, 10000, 6); // => 10000
+
+The caller property gives access to the call stack, and the callee property is occasionally useful to allow unnamed functions to call themselves recursively:
+
+var factorial = function(x) { if (x <= 1) return 1;
+return x * arguments.callee(x-1); };
+
+
+// Copy length elements of the array from to the array to. // Begin copying with element from_start in the from array // and copy that element to to_start in the to array.
+// It is hard to remember the order of the arguments. function arraycopy(/* array */ from, /* index */ from_start,
+/* array */ to, /* index */ to_start, /* integer */ length)
+{
+// code goes here
+}
+// This version is a little less efficient, but you don't have to // remember the order of the arguments, and from_start and to_start // default to 0.
+function easycopy(args) {
+arraycopy(args.from,
+args.from_start || 0, // Note default value provided args.to,
+args.to_start || 0,
+args.length);
+}
+// Here is how you might invoke easycopy(): var a = [1,2,3,4], b = [];
+easycopy({from: a, to: b, length: 4});
+
+JavaScript method parameters have no declared types, and no type checking is performed on the values you pass to a function
+
+when a method can accept any number of arguments, you can use an ellipsis:
+function max(/* number... */) { /* code here */ }
+
+function flexisum(a) { var total = 0;
+for(var i = 0; i < arguments.length; i++) {
+var element = arguments[i], n;
+if (element == null) continue; // Ignore null and undefined arguments
+if (isArray(element))
+n = flexisum.apply(this, element);
+else if (typeof element === "function") n = Number(element());
+else n = Number(element);
+// If the argument is an array // compute its sum recursively // Else if it's a function... // invoke it and convert.
+// Else try to convert it
+if (isNaN(n)) // If we couldn't convert to a number, throw an error throw Error("flexisum(): can't convert " + element + " to number");
+total += n; // Otherwise, add n to the total }
+return total; }
+
+
+// This function returns a different integer each time it is called.
+// It uses a property of itself to remember the next value to be returned. function uniqueInteger() {
+return uniqueInteger.counter++; // Increment and return counter property }
+
+(function() { // mymodule function rewritten as an unnamed expression // Module code goes here.
+}()); // end the function literal and invoke it now.
+This technique of defining and invoking a function in a single expression is used fre- quently enough that it has become idiomatic.
+
+Within the body of a function, arguments.length specifies the number of arguments that were passed to the function. 
+arguments.callee.length (the number expected)
+// This function uses arguments.callee, so it won't work in strict mode. function check(args) {
+var actual = args.length; // The actual number of arguments
+var expected = args.callee.length; // The expected number of arguments if (actual !== expected) // Throw an exception if they differ.
+throw Error("Expected " + expected + "args; got " + actual);
+}
+function f(x, y, z) {
+check(arguments); // Check that the actual # of args matches expected #. return x + y + z; // Now do the rest of the function normally.
+}
+
+To invoke the function f() as a method of the object o (passing no arguments), you could use either call() or apply():
+f.call(o); f.apply(o);
+Either of the lines of code above are similar to the following (which assume that o does not already have a property named m):
+o.m = f; // Make f a temporary method of o. o.m(); // Invoke it, passing no arguments. delete o.m; // Remove the temporary method.
+
+Any arguments to call() after the first invocation context argument are the values that are passed to the function that is invoked. For example, to pass two numbers to the function f() and invoke it as if it were a method of the object o, you could use code like this:
+f.call(o, 1, 2);
+The apply() method is like the call() method, except that the arguments to be passed
+to the function are specified as an array:
+f.apply(o, [1,2]);
+
+function f(y) { return this.x + y; } // This function needs to be bound
+var o = { x : 1 }; var g = f.bind(o); g(2)
+// An object we'll bind to
+// Calling g(x) invokes o.f(x) // => 3
+
+bind() method does more than just bind a function to an object. It also performs partial application: any arguments you pass to bind() after the first are bound along with the this value
+
+function f(y,z) { return this.x + y + z }; // Another function that adds var g = f.bind({x:1}, 2); // Bind this and y
+g(3) // => 6: this.x is bound to 1, y is bound to 2 and z is 3
+
+
+
+A higher-order function is a function that operates on functions, taking one or more functions as arguments and returning a new function. Here is an example:
+// This higher-order function returns a new function that passes its
+// arguments to f and returns the logical negation of f's return value; function not(f) {
+return function() { // Return a new function var result = f.apply(this, arguments); // that calls f
+return !result; // and negates its result.
+}; }
+var even = function(x) { // A function to determine if a number is even return x % 2 === 0;
+};
+
+var odd = not(even); // A new function that does the opposite [1,1,3,5,5].every(odd); // => true: every element of the array is odd
+
+
+
+// Return a memoized version of f.
+// It only works if arguments to f all have distinct string representations. function memoize(f) {
+var cache = {}; // Value cache stored in the closure.
+return function() {
+// Create a string version of the arguments to use as a cache key.
+var key = arguments.length + Array.prototype.join.call(arguments,","); if (key in cache) return cache[key];
+else return cache[key] = f.apply(this, arguments);
+}; }
+
