@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Digital Clock</title>
+
+    <script>
+        //define a function to display current time
+        function displayTime(){
+            var elt = document.getElementById("clock");
+            var now = new Date(); //get current time
+            elt.innerHTML= now.toLocaleTimeString(); //Make elt display it
+            setTimeout(displayTime,1000);  //1000ms = 1 minute
+        }
+        window.onload = displayTime; //Start displaying the time when document loads
+    </script>
+
+    <style>
+        #clock{
+            font : bold 24pt sans;
+            background: #ddf;
+            padding: 10px; /* surround it with some space */
+            border: solid black 2px; /*and a solid black border */
+            border-radius: 10px; /*round the corners */
+
+        }
+    </style>
+</head>
+<body>
+    <h1>Digital Clock</h1>
+    <span id = "clock"></span>
+</body>
+</html>
