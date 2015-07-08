@@ -1,0 +1,27 @@
+<html>
+<body>
+<script language="JavaScript">
+    function function1(){
+        document.all.myDiv.scrollIntoView(true);
+    }
+    function function2(){
+        window.scrollTo(0,0);
+    }
+</script>
+<input type="button" value=" Scroll to the myDiv" onClick="function1();">
+<div style="height:1000;background-color:blue;"></div>
+<div id=myDiv onclick="function2();">
+    This is the element scrolled into view. Click here to go to top.
+    <br>
+    test test
+    <br>
+    test test
+    <br>
+    test test
+    <br>
+    test test
+    <br>
+    test test
+</div>
+</body>
+</html>

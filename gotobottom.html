@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test for the got to bottom button</title>
+    <script>
+        function gobottom(){
+            var documentHeight = document.documentElement.offsetHeight;
+            var viewportHeight = window.innerHeight;
+            var txt = "";
+            txt +="offsetheight: " + documentHeight+"<br>";
+            txt +="innerheoght: " + viewportHeight+"<br>";
+
+            window.scrollTo(0, documentHeight - viewportHeight);
+        }
+    </script>
+</head>
+<body>
+    <input type ="button" value="Go to bottom" onclick="gobottom();">
+
+    <p>start</p>
+    <p>test test test test </p>
+    <p>test test test test </p>
+    <p>test test test test </p>
+    <br>
+    <p>111111111111111111qqqqqqqqqqq</p>
+    <br>
+    <p>111111111111111111qqqqqqqqqqq</p>
+    <p>111111111111111111qqqqqqqqqqq</p>
+    <p>test test test test </p>
+    <p>test test test test </p>
+    <p>test test test test </p>
+    <p>test test test test </p>
+    <p>test test test test </p>
+    <p>test test test test </p>
+    <p>test test test test </p>
+    <p>test test test test </p>
+    <p>test test test test </p>
+    <p>end</p>
+
+</body>
+</html>

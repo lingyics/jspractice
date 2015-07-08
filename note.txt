@@ -526,3 +526,116 @@ var key = arguments.length + Array.prototype.join.call(arguments,","); if (key i
 else return cache[key] = f.apply(this, arguments);
 }; }
 
+
+no two elements in the same document can have the same ID
+
+ou can select all HTML or XML elements of a specified type (or tag name) using the getElementsByTagName() method of the Document object. To obtain a read-only array- like object containing the Element objects for all <span> elements in a document, for example, you might write:
+var spans = document.getElementsByTagName("span");
+
+getElementsByTagName() returns a NodeList object. (See the sidebar in this section for more on the NodeList class.) The elements of the returned NodeList are in document order, so you can select the first <p> element of a document like this:
+var firstpara = document.getElementsByTagName("p")[0];
+
+HTML tags are case-insensitive, and when getElementsByTagName() is used on an HTML document, it performs a case-insensitive tag name comparison. The spans var- iable above, for example, will include any <span> elements that were written as <SPAN>.
+
+So to find all <span> elements inside the first <p> element of a document, you could write:
+var firstpara = document.getElementsByTagName("p")[0];
+var firstParaSpans = firstpara.getElementsByTagName("span");
+
+getElementsByName() and getElementsByTagName() return NodeList objects, and prop- erties like document.images and document.forms are HTMLCollection objects.
+These objects are read-only array-like objects (see §7.11). They have length properties and can be indexed (for reading but not writing) like true arrays. You can iterate the contents of a NodeList or HTMLCollection with a standard loop like this:
+for(var i = 0; i < document.images.length; i++) // Loop through all images document.images[i].style.display = "none"; // ...and hide them.
+
+// Find all descendants of the element named "log" that have the class // "error" and the class "fatal"
+var log = document.getElementById("log");
+var fatal = log.getElementsByClassName("fatal error");
+
+#nav // An element with id="nav"
+div // Any <div> element
+.warning // Any element with "warning" in its class attribute
+
+p[lang="fr"] // A paragraph written in French: <p lang="fr"> 
+*[name="x"] // Any element with a name="x" attribute
+
+pan.fatal.error // Any <span> with "warning" and "fatal" in its class span[lang="fr"].warning // Any warning in French
+
+#log span // Any <span> descendant of the element with id="log"
+#log>span // Any <span> child of the element with id="log"
+body>h1:first-child // The first <h1> child of the <body>
+
+div, #log // All <div> elements plus the element with id="log"
+
+Note that Text and Comment nodes cannot have children, which means that the Node.parentNode property described above never returns a Text or Comment node.
+
+var f = document.forms[0]; // First <form> in the document 
+f.action = "http://www.example.com/submit.php"; // Set URL to submit it to. 
+f.method = "POST"; // HTTP request type
+
+document.body.attributes[0] // The first attribute of the <body> elt document.body.attributes.bgcolor // The bgcolor attribute of the <body> elt document.body.attributes["ONLOAD"] // The onload attribute of the <body> elt
+
+var para = document.getElementsByTagName("p")[0]; // First <p> in the document var text = para.textContent; // Text is "This is a simple document." para.textContent = "Hello World!"; // Alter paragraph content
+
+Example 15-8. Querying the scrollbar positions of a window
+// Return the current scrollbar offsets as the x and y properties of an object function getScrollOffsets(w) {
+// Use the specified window or the current window if no argument w = w || window;
+// This works for all browsers except IE versions 8 and before
+if (w.pageXOffset != null) return {x: w.pageXOffset, y:w.pageYOffset};
+// For IE (or any browser) in Standards mode var d = w.document;
+if (document.compatMode == "CSS1Compat")
+return {x:d.documentElement.scrollLeft, y:d.documentElement.scrollTop};
+// For browsers in Quirks mode
+return { x: d.body.scrollLeft, y: d.body.scrollTop }; }
+
+The easiest way to determine the size and position of an element is to call its getBoundingClientRect() method.
+
+It expects no arguments and returns an object with properties left, right, top, and bottom.
+
+The left and top properties give the X and Y coordinates of the upper-left corner of the element and the right and bottom properties give the coordinates of the lower-right corner.
+
+To convert to document coordinates that remain valid even if the user scrolls the browser window, add the scroll offsets:
+var box = e.getBoundingClientRect(); // Get position in viewport coordinates var offsets = getScrollOffsets(); // Utility function defined above
+var x = box.left + offsets.x; // Convert to document coordinates
+var y = box.top + offsets.y;
+
+For portability, you can compute the element width and height like this:
+var box = e.getBoundingClientRect();
+var w = box.width || (box.right - box.left); var h = box.height || (box.bottom - box.top);
+
+The scrollTo() method of the Window object (and its synonym scroll()) takes the X and Y coordinates of a point (in document coordinates) and sets these as the scrollbar offsets. 
+
+following code scrolls the browser so that the bottom-most page of the document is visible:
+// Get the height of the document and viewport. offsetHeight is explained below. var documentHeight = document.documentElement.offsetHeight;
+var viewportHeight = window.innerHeight; // Or use getViewportSize() above
+// And scroll so the last "page" shows in the viewport
+window.scrollTo(0, documentHeight - viewportHeight);
+
+// Scroll 10 pixels down every 200 ms. Note there is no way to turn this off! javascript:void setInterval(function() {scrollBy(0,10)}, 200);
+
+The behavior of scrollIntoView() is similar to what the browser does when you set window.location.hash to the name of a named anchor (an <a name=""> element).
+
+Forms and the elements they contain can be selected from a document using standard methods like getElementById() and getElementsByTagName():
+var fields = document.getElementById("address").getElementsByTagName("input");
+In browsers that support querySelectorAll(), you might select all radio buttons, or all
+elements with the same name, from a form with code like this:
+// All radio buttons in the form with id "shipping" document.querySelectorAll('#shipping input[type="radio"]');
+// All radio buttons with name "method" in form with id "shipping" document.querySelectorAll('#shipping input[type="radio"][name="method"]');
+
+<form name="shipping"> <fieldset><legend>Shipping Method</legend>
+<label><input type="radio" name="method" value="1st">First-class</label> <label><input type="radio" name="method" value="2day">2-day Air</label> <label><input type="radio" name="method" value="overnite">Overnight</label>
+</fieldset> </form>
+With this form, you might refer to the array of radio button elements like this:
+var methods = document.forms.shipping.elements.method;
+
+An<input type="password">elementisamodifiedinputfieldthatdisplaysasterisks
+
+an <input type="file"> element allows the user to enter the name of a file to be uploaded to the web server. It is a text field combined with a button that opens a file-chooser dialog box. This file selection element has an onchange event handler, like a regular input field.
+
+To add new options to a Select element, create an Option object with the Option() constructor and append it to the options[] property with code like this:
+// Create a new Option object
+var zaire = new Option("Zaire", // The text property
+"zaire", // The value property
+false, // The defaultSelected property false); // The selected property
+// Display it in a Select element by appending it to the options array: var countries = document.address.country; // Get the Select object countries.options[countries.options.length] = zaire;
+
+<div id="editor" contenteditable> Click to edit
+</div>
+
