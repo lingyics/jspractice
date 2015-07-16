@@ -1,0 +1,19 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'request' ]
+2 info using npm@2.11.3
+3 info using node@v0.12.7
+4 verbose stack Error: EACCES, mkdir '/usr/local/share/npm'
+4 verbose stack     at Error (native)
+5 verbose cwd /Users/apple/PhpstormProjects/jspractice
+6 error Darwin 14.3.0
+7 error argv "node" "/usr/local/bin/npm" "install" "request"
+8 error node v0.12.7
+9 error npm  v2.11.3
+10 error path /usr/local/share/npm
+11 error code EACCES
+12 error errno -13
+13 error Error: EACCES, mkdir '/usr/local/share/npm'
+13 error     at Error (native)
+13 error  { [Error: EACCES, mkdir '/usr/local/share/npm'] errno: -13, code: 'EACCES', path: '/usr/local/share/npm' }
+14 error Please try running this command again as root/Administrator.
+15 verbose exit [ -13, true ]
